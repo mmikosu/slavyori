@@ -1,0 +1,14 @@
+{
+  "token": "",
+  "join_message": "hi",
+  "owners": [
+	000000000000000000
+  ],
+  "prefix": [
+    "sy."
+  ],
+  "playing": "people",
+  "playing_type": "watching",
+  "status_type": "online",
+  "version": "1.0.0"
+}
