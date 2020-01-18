@@ -358,16 +358,16 @@ class Music(commands.Cog):
             ctx.voice_state.voice.resume()
             await ctx.message.add_reaction('⏯')
 
-    @commands.command(name='stop')
-    @commands.has_permissions(manage_guild=True)
-    async def _stop(self, ctx: commands.Context):
-        """Stops playing song and clears the queue."""
-
-        ctx.voice_state.songs.clear()
-
-        if not ctx.voice_state.is_playing:
-            ctx.voice_state.voice.stop()
-            await ctx.message.add_reaction('⏹')
+#    @commands.command(name='stop')
+#    @commands.has_permissions(manage_guild=True)
+#    async def _stop(self, ctx: commands.Context):
+#        """Stops playing song and clears the queue."""
+#
+#        ctx.voice_state.songs.clear()
+#
+#        if not ctx.voice_state.is_playing:
+#            ctx.voice_state.voice.stop()
+#            await ctx.message.add_reaction('⏹')
 
     @commands.command(name='skip')
     async def _skip(self, ctx: commands.Context):
