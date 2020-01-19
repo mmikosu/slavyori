@@ -286,20 +286,6 @@ class Music(commands.Cog):
     async def _join(self, ctx: commands.Context):
         """Joins a voice channel."""
 
-        destination = ctx.author.voice.channel
-        if ctx.voice_state.voice:
-            await ctx.voice_state.voice.move_to(destination)
-            return
-
-        ctx.voice_state.voice = await destination.connect()
-
-    @commands.command(name='summon')
-    @commands.has_permissions(manage_guild=True)
-    async def _summon(self, ctx: commands.Context, *, channel: discord.VoiceChannel = None):
-        """Summons the bot to a voice channel.
-        If no channel was specified, it joins your channel.
-        """
-
         if not channel and not ctx.author.voice:
             raise VoiceError('You are neither connected to a voice channel nor specified a channel to join.')
 
@@ -340,24 +326,24 @@ class Music(commands.Cog):
 
         await ctx.send(embed=ctx.voice_state.current.create_embed())
 
-    @commands.command(name='pause')
-    @commands.has_permissions(manage_guild=True)
-    async def _pause(self, ctx: commands.Context):
-        """Pauses the currently playing song."""
-
-        if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_playing():
-            ctx.voice_state.voice.pause()
-            await ctx.message.add_reaction('⏯')
-
-    @commands.command(name='resume')
-    @commands.has_permissions(manage_guild=True)
-    async def _resume(self, ctx: commands.Context):
-        """Resumes a currently paused song."""
-
-        if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_paused():
-            ctx.voice_state.voice.resume()
-            await ctx.message.add_reaction('⏯')
-
+#    @commands.command(name='pause')
+#    @commands.has_permissions(manage_guild=True)
+#    async def _pause(self, ctx: commands.Context):
+#        """Pauses the currently playing song."""
+#
+#        if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_playing():
+#            ctx.voice_state.voice.pause()
+#            await ctx.message.add_reaction('⏯')
+#
+#    @commands.command(name='resume')
+#    @commands.has_permissions(manage_guild=True)
+#    async def _resume(self, ctx: commands.Context):
+#        """Resumes a currently paused song."""
+#
+#        if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_paused():
+#            ctx.voice_state.voice.resume()
+#            await ctx.message.add_reaction('⏯')
+#
 #    @commands.command(name='stop')
 #    @commands.has_permissions(manage_guild=True)
 #    async def _stop(self, ctx: commands.Context):
