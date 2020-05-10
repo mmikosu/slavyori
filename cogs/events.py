@@ -22,10 +22,20 @@ class Events(commands.Cog):
 
         elif isinstance(err, errors.CommandInvokeError):
             error = default.traceback_maker(err.original)
-            await ctx.send(f"cyka blyat! there was an error processing the command.\n{error}")
+
+            if "Unauthorized" in str(err) and len(ctx.message.clean_content):
+                return await ctx.send(
+                    f"the error was over 2000 characters, or the error leaked a token.\n"
+                    f"error will not be displayed."
+                )
+
+            await print(f"cyka blyat! there was an error.\n{error}")
 
         elif isinstance(err, errors.CheckFailure):
             pass
+
+        elif isinstance(err, errors.MaxConcurrencyReached):
+            await ctx.send(f"cyka blyat! you're being ratelimited due to your command usage at a time, please finish the previous one.")
 
         elif isinstance(err, errors.CommandOnCooldown):
             await ctx.send(f"cyka blyat! this command is on cooldown. try again in {err.retry_after:.2f} seconds.")
@@ -36,24 +46,39 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_command(self, ctx):
         try:
-            print(f"{ctx.guild.name} > {ctx.author} > {ctx.message.clean_content}")
+            print(f"{ctx.guild.name} | {ctx.author} | {ctx.message.clean_content}")
         except AttributeError:
-            print(f"Private message > {ctx.author} > {ctx.message.clean_content}")
+            print(f"DM | {ctx.author} | {ctx.message.clean_content}")
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f'Ready: {self.bot.user} | Guilds: {len(self.bot.guilds)}')
-        await self.bot.change_presence(activity=discord.Game(name=f"sy.help | on {len(self.bot.guilds)} servers!"))
+        """ The function that actiavtes when boot was completed """
+        if not hasattr(self.bot, 'uptime'):
+            self.bot.uptime = datetime.utcnow()
+
+        # Indicate that the bot has successfully booted up
+        print(f'Ready: {self.bot.user} | Servers: {len(self.bot.guilds)}')
+
+        await self.bot.change_presence(activity=discord.Activity(type=3, name=f"{len(self.bot.guilds)} servers | cyka blyat!"), status=discord.Status.online)
 
     @commands.Cog.listener()	
     async def on_guild_join(self, guild):
         print(f'I have joined a guild. | Guilds: {len(self.bot.guilds)}')
-        await self.bot.change_presence(activity=discord.Game(name=f"sy.help | on {len(self.bot.guilds)} servers!"))
+        if not self.config.join_message:
+            return
+
+        try:
+            to_send = sorted([chan for chan in guild.channels if chan.permissions_for(guild.me).send_messages and isinstance(chan, discord.TextChannel)], key=lambda x: x.position)[0]
+        except IndexError:
+            pass
+        else:
+            await to_send.send(self.config.join_message)
+        await self.bot.change_presence(activity=discord.Activity(type=3, name=f"{len(self.bot.guilds)} servers | cyka blyat!"), status=discord.Status.online)
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
         print(f'I have been removed from a guild. | Guilds: {len(self.bot.guilds)}')
-        await self.bot.change_presence(activity=discord.Game(name=f"sy.help | on {len(self.bot.guilds)} servers!"))
+        await self.bot.change_presence(activity=discord.Activity(type=3, name=f"{len(self.bot.guilds)} servers | cyka blyat!"), status=discord.Status.online)
 
 
 def setup(bot):

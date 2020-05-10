@@ -1,14 +1,12 @@
 {
-  "token": "",
-  "join_message": "hi",
+  "token": "ur token",
+  "join_message": "Privet cyka, I am Slavyori, your new comrade. I will never let you down. To see my Putin powered functions, type `sy.help`",
   "owners": [
-	000000000000000000
+    000000000000000000
   ],
   "prefix": [
     "sy."
   ],
-  "playing": "people",
-  "playing_type": "watching",
-  "status_type": "online",
-  "version": "1.0.0"
+  "version": "2.0.0",
+  "osukey": "osu api v1 key"
 }
