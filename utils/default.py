@@ -2,6 +2,7 @@ import time
 import json
 import discord
 import traceback
+import timeago as timesince
 
 from collections import namedtuple
 from io import BytesIO
@@ -27,6 +28,10 @@ def timetext(name):
     return f"{name}_{int(time.time())}.txt"
 
 
+def timeago(target):
+    return timesince.format(target)
+
+
 def date(target, clock=True):
     if clock is False:
         return target.strftime("%d %B %Y")
@@ -46,7 +51,7 @@ def actionmessage(case, mass=False):
     if mass is True:
         output = f"**{case}** the IDs/Users"
 
-    return f"Successfully {output}"
+    return f"✅ Successfully {output}"
 
 
 async def prettyResults(ctx, filename: str = "Results", resultmsg: str = "Here's the results:", loop=None):

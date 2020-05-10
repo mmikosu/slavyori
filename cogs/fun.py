@@ -16,7 +16,7 @@ class Fun(commands.Cog):
         self.bot = bot
         self.config = default.get("config.json")
 
-    @commands.command(aliases=['eightball', '8ball'])
+    @commands.command(aliases=['8ball'])
     async def slavball(self, ctx, *, question: commands.clean_content):
         """ Consult 8ball to receive an answer """
         answer = random.choice(lists.ballresponse)
@@ -30,16 +30,19 @@ class Fun(commands.Cog):
 
     @commands.command()
     @commands.cooldown(rate=1, per=2.0, type=commands.BucketType.user)
-    async def urban(self, ctx, *, search: str):
+    async def urban(self, ctx, *, search: commands.clean_content):
         """ Find the 'best' definition to your words """
         async with ctx.channel.typing():
-            url = await http.get(f'https://api.urbandictionary.com/v0/define?term={search}', res_method="json")
+            try:
+                url = await http.get(f'https://api.urbandictionary.com/v0/define?term={search}', res_method="json")
+            except Exception:
+                return await ctx.send("cyka blyat! Urban API returned invalid data. could be borked.")
 
-            if url is None:
-                return await ctx.send("cyka blyat! API broke.")
+            if not url:
+                return await ctx.send("api went woosh byebye")
 
             if not len(url['list']):
-                return await ctx.send("cyka blyat! couldn't find your search in the dictionary...")
+                return await ctx.send("cyka blyat! i couldn't find your search in the dictionary.")
 
             result = sorted(url['list'], reverse=True, key=lambda g: int(g["thumbs_up"]))[0]
 
@@ -53,7 +56,8 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def reverse(self, ctx, *, text: str):
-        """ .txet esreveR
+        """ 
+        .txet esreveR
         Everything you type after reverse will be reversed.
         """
         t_rev = text[::-1].replace("@", "@\u200B").replace("&", "&\u200B")
@@ -61,14 +65,9 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def rate(self, ctx, *, thing: commands.clean_content):
-        """ Rates what you desire """
-        num = random.randint(0, 100)
-        deci = random.randint(0, 9)
-
-        if num == 100:
-            deci = 0
-
-        await ctx.send(f"i rate {thing} a **{num}.{deci} / 100**")
+        """ Rates the input using the Power of Putin. """
+        rate_amount = random.uniform(0.0, 100.0)
+        await ctx.send(f"Putin would rate `{thing}` a **{round(rate_amount, 4)} / 100**")
 
 
 def setup(bot):

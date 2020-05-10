@@ -1,0 +1,63 @@
+import discord
+import nekos
+
+from discord.ext import commands
+from utils import lists, permissions, http, default, argparser
+
+
+class NSFW(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+        self.config = default.get("config.json")
+
+    @commands.command()
+#    @commands.is_nsfw()
+    async def hentai(self, ctx):
+        """ Send a hentai image, only works in NSFW channels. """
+#        await ctx.send(nekos.img("hentai"))
+        if ctx.channel.is_nsfw():
+            await ctx.send(nekos.img("hentai"))
+            
+        else:
+        
+            await ctx.send(f"cyka blyat! this channel is not an nsfw channel.")
+            
+    @commands.command()
+#    @commands.is_nsfw()
+    async def neko(self, ctx):
+        """ Send a neko image, only works in NSFW channels. """
+#        await ctx.send(nekos.img("neko"))
+        if ctx.channel.is_nsfw():
+            await ctx.send(nekos.img("neko"))
+            
+        else:
+        
+            await ctx.send(f"cyka blyat! this channel is not an nsfw channel.")
+            
+    @commands.command()
+#    @commands.is_nsfw()
+    async def hentaigif(self, ctx):
+        """ Send a hentai gif, only works in NSFW channels. """
+#        await ctx.send(nekos.img("gifhentai"))
+        if ctx.channel.is_nsfw():
+            await ctx.send(nekos.img("random_hentai_gif"))
+            
+        else:
+        
+            await ctx.send(f"cyka blyat! this channel is not an nsfw channel.")
+            
+    @commands.command()
+#    @commands.is_nsfw()
+    async def cum(self, ctx):
+        """ Send a cum image, only works in NSFW channels. """
+#        await ctx.send(nekos.img("cum"))
+        if ctx.channel.is_nsfw():
+            await ctx.send(nekos.img("cum"))
+            
+        else:
+        
+            await ctx.send(f"cyka blyat! this channel is not an nsfw channel.")
+
+
+def setup(bot):
+    bot.add_cog(NSFW(bot))
