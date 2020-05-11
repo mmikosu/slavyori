@@ -44,4 +44,4 @@ class HelpFormat(DefaultHelpCommand):
                 await destination.send(page)
         except discord.Forbidden:
             destination = self.get_destination(no_pm=True)
-            await destination.send("Couldn't send help to you due to blocked DMs...")
+            await destination.send("cyka blyat! Couldn't send help to you due to blocked DMs.")
