@@ -12,4 +12,4 @@ You must have *preferably latest* Python 3 & pip to use the bot.
 - Install required packages using pip: (most Linux distros: `python3 -m pip install -r requirements.txt`, most Windows installs: `pip install -r requirements.txt`)
 - Start the bot: (most Linux distros: `python3 index.py`, most Windows installs: `python index.py`)
 
-If you are trying to keep the bot up constantly, I'd recommend using tmux.
+If you are trying to keep the bot up constantly, I'd recommend using pm2.
